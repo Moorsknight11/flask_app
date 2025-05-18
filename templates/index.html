@@ -1,0 +1,89 @@
+<h1>Population Distribution by Sex</h1>
+<img id="chart" src="" alt="Pie Chart will appear here">
+
+<h2>Select a Gouvernorat</h2>
+<form id="filter-form-gv" method="GET">
+    <label for="code_gouvernorat">Gouvernorat:</label>
+    <select name="code_gouvernorat" id="code_gouvernorat">
+        {% for gov in gouvernorats %}
+        <option value="{{ gov['Code_Gouvernorat'] }}">{{ gov['Gouvernorat'] }}</option>
+        {% endfor %}
+    </select>
+    <fieldset>
+        <legend>Filter Graph By:</legend>
+        <label><input type="radio" name="filter_sexe_gv" value="M"> Male</label>
+        <label><input type="radio" name="filter_sexe_gv" value="F"> Female</label>
+        <label><input type="radio" name="filter_sexe_gv" value="both"> Both</label>
+    </fieldset>
+    <fieldset>
+        <legend>Filter Graph By:</legend>
+        <label><input type="radio" name="filter_age_gv" value="age"> age</label>
+        <label><input type="radio" name="filter_age_gv" value="noage"> without age</label>
+
+    </fieldset>
+    <button type="submit">Get Graph</button>
+</form>
+<form id="filter-form-dl" method="GET">
+
+    <label for="code_delegation">Délégation:</label>
+    <select name="code_delegation" id="code_delegation">
+        <option value="">Select a delegation</option>
+    </select>
+    <fieldset>
+        <legend>Filter Graph By:</legend>
+        <label><input type="radio" name="filter_sexe_dl" value="M"> Male</label>
+        <label><input type="radio" name="filter_sexe_dl" value="F"> Female</label>
+        <label><input type="radio" name="filter_sexe_dl" value="both"> Both</label>
+    </fieldset>
+    <fieldset>
+        <legend>Filter Graph By:</legend>
+        <label><input type="radio" name="filter_age_dl" value="age"> age</label>
+        <label><input type="radio" name="filter_age_dl" value="noage"> without age</label>
+
+    </fieldset>
+    <button type="submit">Get Graph</button>
+</form>
+
+<script>
+    document.getElementById("code_gouvernorat").addEventListener("change", function () {
+        const govCode = this.value;
+
+
+        fetch(`/delegations?code_gouvernorat=${govCode}`)
+            .then(res => res.json())
+            .then(data => {
+                const delegationSelect = document.getElementById("code_delegation");
+                delegationSelect.innerHTML = "";
+                data.forEach(delegation => {
+                    const opt = document.createElement("option");
+                    opt.value = delegation.Code_Delegation;
+                    opt.textContent = delegation.Délégations;
+                    delegationSelect.appendChild(opt);
+                });
+            });
+    });
+
+    document.getElementById("filter-form-dl").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const delegationCode = document.getElementById("code_delegation").value;
+        const sexe = document.querySelector("input[name='filter_sexe_dl']:checked")?.value;
+        const age = document.querySelector("input[name='filter_age_dl']:checked")?.value;
+        if (!delegationCode) return;
+
+        document.getElementById("chart").src = `/dlplot.png?code_delegation=${delegationCode}&age=${age}&sexe=${sexe}`;
+    });
+
+
+
+    document.getElementById("filter-form-gv").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const gvCode = document.getElementById("code_gouvernorat").value;
+        const sexe = document.querySelector("input[name='filter_sexe_gv']:checked")?.value;
+        const age = document.querySelector("input[name='filter_age_gv']:checked")?.value;
+        if (!gvCode) return;
+
+        document.getElementById("chart").src = `/gvplot.png?code_gouvernorat=${gvCode}&age=${age}&sexe=${sexe}`;
+    });
+
+
+</script>
