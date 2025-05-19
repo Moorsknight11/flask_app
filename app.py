@@ -34,20 +34,26 @@ def get_delegations():
     df = pd.DataFrame(data)
     return jsonify(df.to_dict(orient="records"))
 
-@app.route("/")
+@app.route("/", methods=["GET", "HEAD"])
 def index():
-    response = requests.get("https://moors.rf.gd/query.php", params={
-        "gouvernorats": "all",
+    if request.method == "HEAD":
+        return '', 200
+    try:
+        response = requests.get("https://moors.rf.gd/query.php", params={"gouvernorats": "all"}, timeout=5)
+        response.raise_for_status()
+        if response.status_code != 200:
+            return "Failed to fetch data", 500
 
-    })
+        data = response.json()
+        gouvernorats_df = pd.DataFrame(data)
+        gouvernorats = gouvernorats_df.to_dict(orient='records')
+        return render_template("index.html", gouvernorats=gouvernorats, selected_code=None)
+    except (requests.RequestException, ValueError) as e:
+        return f"Error fetching or parsing data: {e}", 500
 
-    if response.status_code != 200:
-        return "Failed to fetch data", 500
+   
 
-    data = response.json()
-    gouvernorats_df = pd.DataFrame(data)
-    gouvernorats = gouvernorats_df.to_dict(orient='records')
-    return render_template("index.html", gouvernorats=gouvernorats, selected_code=None)
+    
 
 @app.route("/filter")
 def filter():
