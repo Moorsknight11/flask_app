@@ -20,18 +20,32 @@ app = Flask(__name__)
 # engine = create_engine(f'mysql+pymysql://{username}:{password}@{host}/{database}')
 @app.route("/delegations")
 def get_delegations():
-    code_gov = requests.get("https://moors.rd.gd/query.php")
-    query = """
-        SELECT DISTINCT Code_Delegation, Délégations 
-        FROM population 
-        WHERE Code_Gouvernorat = %s
-    """
-    df = pd.read_sql(query, con=engine, params=(code_gov,))
+    code_gov = request.form.get("code_gouvernorat")
+    
+    response = requests.get("https://moors.rf.gd/query.php?", params={
+        "code_gov": code_gov,
+
+    })
+
+    if response.status_code != 200: 
+        return "Failed to fetch data", 500
+
+    data = response.json()
+    df = pd.DataFrame(data)
     return jsonify(df.to_dict(orient="records"))
 
 @app.route("/", methods=["GET"])
 def index():
-    gouvernorats_df = pd.read_sql("SELECT DISTINCT Code_Gouvernorat, Gouvernorat FROM population", con=engine)
+    response = requests.get("https://moors.rf.gd/query.php?", params={
+        "gouvernorats": "all",
+
+    })
+
+    if response.status_code != 200:
+        return "Failed to fetch data", 500
+
+    data = response.json()
+    gouvernorats_df = pd.DataFrame(data)
     gouvernorats = gouvernorats_df.to_dict(orient='records')
     return render_template("index.html", gouvernorats=gouvernorats, selected_code=None)
 
@@ -41,7 +55,17 @@ def filter():
     if not selected_code:
         return redirect(url_for('index'))
 
-    gouvernorats_df = pd.read_sql("SELECT DISTINCT Code_Gouvernorat, Gouvernorat FROM population", con=engine)
+    response = requests.get("https://moors.rf.gd/query.php?", params={
+        "gouvernorats": "filter",
+        "selected_code":selected_code
+
+    })
+
+    if response.status_code != 200:
+        return "Failed to fetch data", 500
+
+    data = response.json()
+    gouvernorats_df = pd.DataFrame(data)
     gouvernorats = gouvernorats_df.to_dict(orient='records')
 
     return render_template("index.html", gouvernorats=gouvernorats, selected_code=selected_code)
@@ -66,16 +90,17 @@ def dlplot_png():
             return "No Code_Gouvernorat provided", 400
 
        
-        query = """
-        SELECT Sexe, SUM(Population) AS total_population
-        FROM population
-        WHERE Code_Delegation = %s
-        GROUP BY Sexe
-        """
-        df = pd.read_sql(query, con=engine, params=(selected_code,))
-        print(df.columns)
+        response = requests.get("https://moors.rf.gd/query.php?", params={
+        "selected_code": selected_code,
+        "sexe":sexe
 
-        df = pd.read_sql(query, con=engine, params=(selected_code,))
+    })
+
+        if response.status_code != 200:
+            return "Failed to fetch data", 500
+
+        data = response.json()
+        df = pd.DataFrame(data)
         plt.figure(figsize=(6,6))
         plt.pie(
         df['total_population'],
@@ -94,13 +119,16 @@ def dlplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        query = """
-        SELECT Sexe, ID_Sexe, SUM(Population) AS total_population
-        FROM population
-        WHERE Code_Delegation = %s AND ID_Sexe = %s
-        GROUP BY Sexe, ID_Sexe
-    """
-        df = pd.read_sql(query, con=engine, params=(selected_code, sexe))
+        response = requests.get("https://moors.rf.gd/query.php?", params={
+        "selected_code": selected_code,
+        "sexe":sexe,
+    })
+
+        if response.status_code != 200:
+            return "Failed to fetch data", 500
+
+        data = response.json()
+        df = pd.DataFrame(data)
 
         if df.empty:
             return "No data found for the selected delegation and sex.", 404
@@ -120,21 +148,21 @@ def dlplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        query = """
-        SELECT Sexe, ID_Sexe, Classe_Age, Trancheage, SUM(Population) AS total_population
-        FROM population
-        WHERE Code_Delegation = %s
-        GROUP BY Sexe, ID_Sexe, Trancheage
-    """
-        df = pd.read_sql(query, con=engine, params=(selected_code,))
+        response = requests.get("https://moors.rf.gd/query.php?", params={
+        "selected_code": "selected_code",
+        "sexe":sexe,
+        "age":age
+        })
+
+        if response.status_code != 200:
+            return "Failed to fetch data", 500
+
+        data = response.json()
+        df = pd.DataFrame(data)
 
         if df.empty:
             return "No data found for the selected delegation and sex.", 404
 
-        df = pd.read_sql(query, con=engine, params=(selected_code,))
-        print(df.columns)
-
-        df = pd.read_sql(query, con=engine, params=(selected_code,))
         plt.figure(figsize=(20,20))
         df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_population'].astype(str)
         plt.pie(
@@ -155,13 +183,19 @@ def dlplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        query = """
-        SELECT Sexe, ID_Sexe, SUM(Population) AS total_population
-        FROM population
-        WHERE Code_Delegation= %s AND ID_Sexe = %s
-        GROUP BY Sexe, ID_Sexe, Trancheage
-    """
-        df = pd.read_sql(query, con=engine, params=(selected_code,sexe))
+        response = requests.get("https://moors.rf.gd/query.php?", params={
+        "selected_code": "selected_code",
+        "sexe":sexe,
+        "age" :age
+
+        })
+
+        if response.status_code != 200:
+            return "Failed to fetch data", 500
+
+        data = response.json()
+        df = pd.DataFrame(data)
+
         if df.empty:
             return "No data found for the selected delegation and sex.", 404
 
@@ -187,13 +221,19 @@ def dlplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        query = """
-        SELECT Sexe, ID_Sexe,Classe_Age, Trancheage, SUM(Population) AS total_population
-        FROM population
-        WHERE Code_Delegation =%s AND ID_Sexe = %s
-        GROUP BY Sexe, ID_Sexe, Trancheage
-    """
-        df = pd.read_sql(query, con=engine, params=(selected_code,sexe))
+        response = requests.get("https://moors.rf.gd/query.php?", params={
+        "selected_code": "selected_code",
+        "sexe":sexe,
+        "age" :age
+
+        })
+
+        if response.status_code != 200:
+            return "Failed to fetch data", 500
+
+        data = response.json()
+        df = pd.DataFrame(data)
+
         if df.empty:
             return "No data found for the selected delegation and sex.", 404
 
@@ -235,13 +275,20 @@ def gvplot_png():
             return "No Code_Gouvernorat provided", 400
 
        
-        query = """
-        SELECT Sexe, SUM(Population) AS total_population
-        FROM population
-        WHERE Code_Gouvernorat= %s
-        GROUP BY Sexe
-        """
-        df = pd.read_sql(query, con=engine, params=(selected_code,))
+        response = requests.get("https://moors.rf.gd/query.php?", params={
+        "gouvernorats":"1",
+        "selected_code": "selected_code",
+        "sexe":sexe,
+        "age" :age
+
+        })
+
+        if response.status_code != 200:
+            return "Failed to fetch data", 500
+
+        data = response.json()
+        df = pd.DataFrame(data)
+
         plt.figure(figsize=(6,6))
         plt.pie(
         df['total_population'],
@@ -260,13 +307,19 @@ def gvplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        query = """
-        SELECT Sexe, ID_Sexe, SUM(Population) AS total_population
-        FROM population
-        WHERE Code_Gouvernorat = %s AND ID_Sexe = %s
-        GROUP BY Sexe, ID_Sexe
-    """
-        df = pd.read_sql(query, con=engine, params=(selected_code, sexe))
+        response = requests.get("https://moors.rf.gd/query.php?", params={
+        "gouvernorats":"1",
+        "selected_code": "selected_code",
+        "sexe":sexe,
+        "age" :age
+
+        })
+
+        if response.status_code != 200:
+            return "Failed to fetch data", 500
+
+        data = response.json()
+        df = pd.DataFrame(data)
 
         if df.empty:
             return "No data found for the selected delegation and sex.", 404
@@ -286,21 +339,23 @@ def gvplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        query = """
-        SELECT Sexe, ID_Sexe, Classe_Age, Trancheage, SUM(Population) AS total_population
-        FROM population
-        WHERE Code_Gouvernorat= %s
-        GROUP BY Sexe, ID_Sexe, Trancheage
-    """
-        df = pd.read_sql(query, con=engine, params=(selected_code,))
+        response = requests.get("https://moors.rf.gd/query.php?", params={
+        "gouvernorats":"1",
+        "selected_code": "selected_code",
+        "sexe":sexe,
+        "age" :age
+
+        })
+
+        if response.status_code != 200:
+            return "Failed to fetch data", 500
+
+        data = response.json()
+        df = pd.DataFrame(data)
 
         if df.empty:
             return "No data found for the selected delegation and sex.", 404
 
-        df = pd.read_sql(query, con=engine, params=(selected_code,))
-        print(df.columns)
-
-        df = pd.read_sql(query, con=engine, params=(selected_code,))
         plt.figure(figsize=(20,20))
         df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_population'].astype(str)
         plt.pie(
@@ -321,21 +376,23 @@ def gvplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        query = """
-        SELECT Sexe, ID_Sexe, SUM(Population) AS total_population
-        FROM population
-        WHERE Code_Gouvernorat= %s
-        GROUP BY Sexe, ID_Sexe, Trancheage
-    """
-        df = pd.read_sql(query, con=engine, params=(selected_code,))
+        response = requests.get("https://moors.rf.gd/query.php?", params={
+        "gouvernorats":"1",
+        "selected_code": "selected_code",
+        "sexe":sexe,
+        "age" :age
+
+        })
+
+        if response.status_code != 200:
+            return "Failed to fetch data", 500
+
+        data = response.json()
+        df = pd.DataFrame(data)
 
         if df.empty:
             return "No data found for the selected delegation and sex.", 404
 
-        df = pd.read_sql(query, con=engine, params=(selected_code,))
-        print(df.columns)
-
-        df = pd.read_sql(query, con=engine, params=(selected_code,))
         plt.figure(figsize=(20,20))
         df['label'] = df['Sexe'] +' ('+df['total_population'].astype(str)+')'
         plt.pie(
@@ -356,13 +413,19 @@ def gvplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        query = """
-        SELECT Sexe, ID_Sexe,Classe_Age, Trancheage, SUM(Population) AS total_population
-        FROM population
-        WHERE Code_Gouvernorat= %s AND ID_Sexe = %s
-        GROUP BY Sexe, ID_Sexe, Trancheage
-    """
-        df = pd.read_sql(query, con=engine, params=(selected_code,sexe))
+        response = requests.get("https://moors.rf.gd/query.php?", params={
+        "gouvernorats":"1",
+        "selected_code": "selected_code",
+        "sexe":sexe,
+        "age" :age
+
+        })
+
+        if response.status_code != 200:
+            return "Failed to fetch data", 500
+
+        data = response.json()
+        df = pd.DataFrame(data)
         if df.empty:
             return "No data found for the selected delegation and sex.", 404
 
@@ -388,13 +451,19 @@ def gvplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        query = """
-        SELECT Sexe, ID_Sexe, SUM(Population) AS total_population
-        FROM population
-        WHERE Code_Gouvernorat= %s AND ID_Sexe = %s
-        GROUP BY Sexe, ID_Sexe, Trancheage
-    """
-        df = pd.read_sql(query, con=engine, params=(selected_code,sexe))
+        response = requests.get("https://moors.rf.gd/query.php?", params={
+        "gouvernorats":"1",
+        "selected_code": "selected_code",
+        "sexe":sexe,
+        "age" :age
+
+        })
+
+        if response.status_code != 200:
+            return "Failed to fetch data", 500
+
+        data = response.json()
+        df = pd.DataFrame(data)
         if df.empty:
             return "No data found for the selected delegation and sex.", 404
 
