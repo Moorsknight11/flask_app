@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 import pandas as pd
 import matplotlib.pyplot as plt
 import io
-
+import requests
 
 
 from flask import jsonify
@@ -12,15 +12,15 @@ from flask import jsonify
 app = Flask(__name__)
 
 # DB connection (replace with your credentials)
-username = 'root'
-password = ''
-host = 'localhost'
-database = 'test'
+# username = 'root'
+# password = ''
+# host = 'localhost'
+# database = 'test'
 
-engine = create_engine(f'mysql+pymysql://{username}:{password}@{host}/{database}')
+# engine = create_engine(f'mysql+pymysql://{username}:{password}@{host}/{database}')
 @app.route("/delegations")
 def get_delegations():
-    code_gov = request.args.get("code_gouvernorat")
+    code_gov = requests.get("https://moors.rd.gd/query.php")
     query = """
         SELECT DISTINCT Code_Delegation, Délégations 
         FROM population 
