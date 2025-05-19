@@ -5,3 +5,4 @@ requests
 SQLAlchemy
 mysqlclient  # or pymysql if you use that instead
 gunicorn     # for deploying to Render or similar platforms
+cloudscraper

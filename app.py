@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import io
 import requests
-
+import cloudscraper
 
 from flask import jsonify
 
@@ -39,7 +39,8 @@ def index():
     if request.method == "HEAD":
         return '', 200
     try:
-        response = requests.get("https://moors.rf.gd/query.php", params={"gouvernorats": "all"}, timeout=5)
+        scraper = cloudscraper.create_scraper()
+        response = scraper.get("https://moors.rf.gd/query.php", params={"gouvernorats": "all"})
         response.raise_for_status()
         if response.status_code != 200:
             return "Failed to fetch data", 500
