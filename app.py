@@ -22,7 +22,7 @@ app = Flask(__name__)
 def get_delegations():
     code_gov = request.form.get("code_gouvernorat")
     
-    response = requests.get("https://moors.rf.gd/query.php?", params={
+    response = requests.get("https://moors.rf.gd/query.php", params={
         "code_gov": code_gov,
 
     })
@@ -36,7 +36,7 @@ def get_delegations():
 
 @app.route("/", methods=["GET"])
 def index():
-    response = requests.get("https://moors.rf.gd/query.php?", params={
+    response = requests.get("https://moors.rf.gd/query.php", params={
         "gouvernorats": "all",
 
     })
@@ -55,7 +55,7 @@ def filter():
     if not selected_code:
         return redirect(url_for('index'))
 
-    response = requests.get("https://moors.rf.gd/query.php?", params={
+    response = requests.get("https://moors.rf.gd/query.php", params={
         "gouvernorats": "filter",
         "selected_code":selected_code
 
@@ -90,7 +90,7 @@ def dlplot_png():
             return "No Code_Gouvernorat provided", 400
 
        
-        response = requests.get("https://moors.rf.gd/query.php?", params={
+        response = requests.get("https://moors.rf.gd/query.php", params={
         "selected_code": selected_code,
         "sexe":sexe
 
@@ -119,7 +119,7 @@ def dlplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        response = requests.get("https://moors.rf.gd/query.php?", params={
+        response = requests.get("https://moors.rf.gd/query.php", params={
         "selected_code": selected_code,
         "sexe":sexe,
     })
@@ -148,7 +148,7 @@ def dlplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        response = requests.get("https://moors.rf.gd/query.php?", params={
+        response = requests.get("https://moors.rf.gd/query.php", params={
         "selected_code": "selected_code",
         "sexe":sexe,
         "age":age
@@ -183,7 +183,7 @@ def dlplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        response = requests.get("https://moors.rf.gd/query.php?", params={
+        response = requests.get("https://moors.rf.gd/query.php", params={
         "selected_code": "selected_code",
         "sexe":sexe,
         "age" :age
@@ -221,7 +221,7 @@ def dlplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        response = requests.get("https://moors.rf.gd/query.php?", params={
+        response = requests.get("https://moors.rf.gd/query.php", params={
         "selected_code": "selected_code",
         "sexe":sexe,
         "age" :age
@@ -275,7 +275,7 @@ def gvplot_png():
             return "No Code_Gouvernorat provided", 400
 
        
-        response = requests.get("https://moors.rf.gd/query.php?", params={
+        response = requests.get("https://moors.rf.gd/query.php", params={
         "gouvernorats":"1",
         "selected_code": "selected_code",
         "sexe":sexe,
@@ -307,7 +307,7 @@ def gvplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        response = requests.get("https://moors.rf.gd/query.php?", params={
+        response = requests.get("https://moors.rf.gd/query.php", params={
         "gouvernorats":"1",
         "selected_code": "selected_code",
         "sexe":sexe,
@@ -339,7 +339,7 @@ def gvplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        response = requests.get("https://moors.rf.gd/query.php?", params={
+        response = requests.get("https://moors.rf.gd/query.php", params={
         "gouvernorats":"1",
         "selected_code": "selected_code",
         "sexe":sexe,
@@ -376,7 +376,7 @@ def gvplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        response = requests.get("https://moors.rf.gd/query.php?", params={
+        response = requests.get("https://moors.rf.gd/query.php", params={
         "gouvernorats":"1",
         "selected_code": "selected_code",
         "sexe":sexe,
@@ -413,7 +413,7 @@ def gvplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        response = requests.get("https://moors.rf.gd/query.php?", params={
+        response = requests.get("https://moors.rf.gd/query.php", params={
         "gouvernorats":"1",
         "selected_code": "selected_code",
         "sexe":sexe,
@@ -451,7 +451,7 @@ def gvplot_png():
         if not selected_code:
             return "No Code_Gouvernorat provided", 400
 
-        response = requests.get("https://moors.rf.gd/query.php?", params={
+        response = requests.get("https://moors.rf.gd/query.php", params={
         "gouvernorats":"1",
         "selected_code": "selected_code",
         "sexe":sexe,
