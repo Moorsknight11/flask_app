@@ -41,6 +41,9 @@ def index():
     try:
         scraper = cloudscraper.create_scraper()
         response = scraper.get("https://moors.rf.gd/query.php", params={"gouvernorats": "all"})
+        print("STATUS:", response.status_code)
+        print("HEADERS:", response.headers)
+        print("RESPONSE TEXT:", response.text[:500])
         response.raise_for_status()
         if response.status_code != 200:
             return "Failed to fetch data", 500
