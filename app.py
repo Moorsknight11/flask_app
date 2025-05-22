@@ -22,7 +22,7 @@ app = Flask(__name__)
 def get_delegations():
     code_gov = request.form.get("code_gouvernorat")
     
-    response = requests.get("https://moors.rf.gd/query.php", params={
+    response = requests.get("https://moors.atwebpages.com/query.php", params={
         "code_gov": code_gov,
 
     })
@@ -40,7 +40,7 @@ def index():
         return '', 200
     try:
         scraper = cloudscraper.create_scraper()
-        response = scraper.get("https://moors.rf.gd/query.php", params={"gouvernorats": "all"})
+        response = scraper.get("http://moors.atwebpages.com/query.php", params={"gouvernorats": "all"})
         print("STATUS:", response.status_code)
         print("HEADERS:", response.headers)
         print("RESPONSE TEXT:", response.text[:500])

@@ -6,7 +6,7 @@ from langdetect import detect, DetectorFactory
 # Fix for consistent langdetect results
 DetectorFactory.seed = 0
 
-INPUT_FILE = "alice.txt"
+INPUT_FILE = "myroom.txt"
 TEMP_FOLDER = "temp_audio"
 OUTPUT_FILE = "output.mp3"
 
@@ -22,8 +22,8 @@ print("[Generating audio files with language detection...]")
 for i, line in enumerate(lines):
     try:
         lang = detect(line)
-        if lang.startswith("de"):
-            tts_lang = "de"
+        if lang.startswith("ko"):
+            tts_lang = "ko"
         else:
             # Default to English for any non-German detected language
             tts_lang = "en"
