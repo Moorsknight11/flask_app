@@ -507,15 +507,23 @@ import matplotlib.pyplot as plt
 import io
 
 from flask import jsonify
+import os
+from dotenv import load_dotenv
 
+# Load .env file
 
 app = Flask(__name__)
 
-# DB connection (replace with your credentials)
-username = 'root'
-password = ''
-host = 'localhost'
-database = 'test'
+
+
+load_dotenv()
+
+# Get variables
+username = os.getenv('DB_USERNAME')
+password = os.getenv('DB_PASSWORD')
+host = os.getenv('DB_HOST')
+database = os.getenv('DB_NAME')
+
 
 engine = create_engine(f'mysql+pymysql://{username}:{password}@{host}/{database}')
 @app.route("/delegations")
