@@ -113,9 +113,9 @@
 #         df = pd.DataFrame(data)
 #         plt.figure(figsize=(6,6))
 #         plt.pie(
-#         df['total_population'],
+#         df['total_Population'],
 #         labels=df['Sexe'],
-#         autopct=lambda pct: autopct_format(pct, df['total_population']),
+#         autopct=lambda pct: autopct_format(pct, df['total_Population']),
 #         startangle=140
 #         )
 #         plt.axis('equal')
@@ -144,10 +144,10 @@
 #             return "No data found for the selected delegation and sex.", 404
 
 #         plt.figure(figsize=(6, 6))
-#         plt.bar(df['Sexe'], df['total_population'], color='skyblue')
+#         plt.bar(df['Sexe'], df['total_Population'], color='skyblue')
 #         plt.xlabel('Sexe')
 #         plt.ylabel('Population')
-#         plt.title(f"Population for Sex: {df.iloc[0]['Sexe']} in Delegation {df['total_population'][0]}")
+#         plt.title(f"Population for Sex: {df.iloc[0]['Sexe']} in Delegation {df['total_Population'][0]}")
     
 #         img = io.BytesIO()
 #         plt.savefig(img, format='png')
@@ -174,10 +174,10 @@
 #             return "No data found for the selected delegation and sex.", 404
 
 #         plt.figure(figsize=(20,20))
-#         df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_population'].astype(str)
+#         df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_Population'].astype(str)
 #         plt.pie(
 
-#         df['total_population'],
+#         df['total_Population'],
 #         labels=df['label'],
 #         autopct=lambda pct: autopct_format(pct,''),
 #         startangle=140
@@ -212,10 +212,10 @@
 
      
 #         plt.figure(figsize=(20,20))
-#         df['label'] = df['Sexe'] +' ('+df['total_population'].astype(str)+')'
+#         df['label'] = df['Sexe'] +' ('+df['total_Population'].astype(str)+')'
 #         plt.pie(
 
-#         df['total_population'],
+#         df['total_Population'],
 #         labels=df['label'],
 #         autopct=lambda pct: autopct_format(pct,''),
 #         startangle=140
@@ -250,10 +250,10 @@
 
      
 #         plt.figure(figsize=(20,20))
-#         df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_population'].astype(str)
+#         df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_Population'].astype(str)
 #         plt.pie(
 
-#         df['total_population'],
+#         df['total_Population'],
 #         labels=df['label'],
 #         autopct=lambda pct: autopct_format(pct,''),
 #         startangle=140
@@ -301,9 +301,9 @@
 
 #         plt.figure(figsize=(6,6))
 #         plt.pie(
-#         df['total_population'],
+#         df['total_Population'],
 #         labels=df['Sexe'],
-#         autopct=lambda pct: autopct_format(pct, df['total_population']),
+#         autopct=lambda pct: autopct_format(pct, df['total_Population']),
 #         startangle=140
 #         )
 #         plt.axis('equal')
@@ -335,10 +335,10 @@
 #             return "No data found for the selected delegation and sex.", 404
 
 #         plt.figure(figsize=(6, 6))
-#         plt.bar(df['Sexe'], df['total_population'], color='skyblue')
+#         plt.bar(df['Sexe'], df['total_Population'], color='skyblue')
 #         plt.xlabel('Sexe')
 #         plt.ylabel('Population')
-#         plt.title(f"Population for Sex: {df.iloc[0]['Sexe']} in Gouvernorat {df['total_population'][0]}")
+#         plt.title(f"Population for Sex: {df.iloc[0]['Sexe']} in Gouvernorat {df['total_Population'][0]}")
     
 #         img = io.BytesIO()
 #         plt.savefig(img, format='png')
@@ -367,10 +367,10 @@
 #             return "No data found for the selected delegation and sex.", 404
 
 #         plt.figure(figsize=(20,20))
-#         df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_population'].astype(str)
+#         df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_Population'].astype(str)
 #         plt.pie(
 
-#         df['total_population'],
+#         df['total_Population'],
 #         labels=df['label'],
 #         autopct=lambda pct: autopct_format(pct,''),
 #         startangle=140
@@ -404,10 +404,10 @@
 #             return "No data found for the selected delegation and sex.", 404
 
 #         plt.figure(figsize=(20,20))
-#         df['label'] = df['Sexe'] +' ('+df['total_population'].astype(str)+')'
+#         df['label'] = df['Sexe'] +' ('+df['total_Population'].astype(str)+')'
 #         plt.pie(
 
-#         df['total_population'],
+#         df['total_Population'],
 #         labels=df['label'],
 #         autopct=lambda pct: autopct_format(pct,''),
 #         startangle=140
@@ -442,10 +442,10 @@
 
      
 #         plt.figure(figsize=(20,20))
-#         df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_population'].astype(str)
+#         df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_Population'].astype(str)
 #         plt.pie(
 
-#         df['total_population'],
+#         df['total_Population'],
 #         labels=df['label'],
 #         autopct=lambda pct: autopct_format(pct,''),
 #         startangle=140
@@ -480,10 +480,10 @@
 
      
 #         plt.figure(figsize=(20,20))
-#         df['label'] = df['Sexe'] +' ('+df['total_population'].astype(str)+')'
+#         df['label'] = df['Sexe'] +' ('+df['total_Population'].astype(str)+')'
 #         plt.pie(
 
-#         df['total_population'],
+#         df['total_Population'],
 #         labels=df['label'],
 #         autopct=lambda pct: autopct_format(pct,''),
 #         startangle=140
@@ -500,6 +500,10 @@
 
 # if __name__ == "__main__":
 #     app.run(debug=True)
+# if __name__ == "__main__":
+# if __name__ == "__main__":
+# if __name__ == "__main__":
+# if __name__ == "__main__":
 from flask import Flask, render_template, request, redirect, url_for, Response
 from sqlalchemy import create_engine
 import pandas as pd
@@ -533,7 +537,7 @@ def get_delegations():
     code_gov = request.args.get("code_gouvernorat")
     query = """
         SELECT DISTINCT Code_Delegation, Délégations 
-        FROM population 
+        FROM Population 
         WHERE Code_Gouvernorat = %s
     """
     df = pd.read_sql(query, con=engine, params=(code_gov,))
@@ -541,7 +545,7 @@ def get_delegations():
 
 @app.route("/", methods=["GET"])
 def index():
-    gouvernorats_df = pd.read_sql("SELECT DISTINCT Code_Gouvernorat, Gouvernorat FROM population", con=engine)
+    gouvernorats_df = pd.read_sql("SELECT DISTINCT Code_Gouvernorat, Gouvernorat FROM Population", con=engine)
     gouvernorats = gouvernorats_df.to_dict(orient='records')
     return render_template("index.html", gouvernorats=gouvernorats, selected_code=None)
 
@@ -551,7 +555,7 @@ def filter():
     if not selected_code:
         return redirect(url_for('index'))
 
-    gouvernorats_df = pd.read_sql("SELECT DISTINCT Code_Gouvernorat, Gouvernorat FROM population", con=engine)
+    gouvernorats_df = pd.read_sql("SELECT DISTINCT Code_Gouvernorat, Gouvernorat FROM Population", con=engine)
     gouvernorats = gouvernorats_df.to_dict(orient='records')
 
     return render_template("index.html", gouvernorats=gouvernorats, selected_code=selected_code)
@@ -577,8 +581,8 @@ def dlplot_png():
 
        
         query = """
-        SELECT Sexe, SUM(Population) AS total_population
-        FROM population
+        SELECT Sexe, SUM(Population) AS total_Population
+        FROM Population
         WHERE Code_Delegation = %s
         GROUP BY Sexe
         """
@@ -588,9 +592,9 @@ def dlplot_png():
         df = pd.read_sql(query, con=engine, params=(selected_code,))
         plt.figure(figsize=(6,6))
         plt.pie(
-        df['total_population'],
+        df['total_Population'],
         labels=df['Sexe'],
-        autopct=lambda pct: autopct_format(pct, df['total_population']),
+        autopct=lambda pct: autopct_format(pct, df['total_Population']),
         startangle=140
         )
         plt.axis('equal')
@@ -605,8 +609,8 @@ def dlplot_png():
             return "No Code_Gouvernorat provided", 400
 
         query = """
-        SELECT Sexe, ID_Sexe, SUM(Population) AS total_population
-        FROM population
+        SELECT Sexe, ID_Sexe, SUM(Population) AS total_Population
+        FROM Population
         WHERE Code_Delegation = %s AND ID_Sexe = %s
         GROUP BY Sexe, ID_Sexe
     """
@@ -616,10 +620,10 @@ def dlplot_png():
             return "No data found for the selected delegation and sex.", 404
 
         plt.figure(figsize=(6, 6))
-        plt.bar(df['Sexe'], df['total_population'], color='skyblue')
+        plt.bar(df['Sexe'], df['total_Population'], color='skyblue')
         plt.xlabel('Sexe')
         plt.ylabel('Population')
-        plt.title(f"Population for Sex: {df.iloc[0]['Sexe']} in Delegation {df['total_population'][0]}")
+        plt.title(f"Population for Sex: {df.iloc[0]['Sexe']} in Delegation {df['total_Population'][0]}")
     
         img = io.BytesIO()
         plt.savefig(img, format='png')
@@ -631,8 +635,8 @@ def dlplot_png():
             return "No Code_Gouvernorat provided", 400
 
         query = """
-        SELECT Sexe, ID_Sexe, Classe_Age, Trancheage, SUM(Population) AS total_population
-        FROM population
+        SELECT Sexe, ID_Sexe, Classe_Age, Trancheage, SUM(Population) AS total_Population
+        FROM Population
         WHERE Code_Delegation = %s
         GROUP BY Sexe, ID_Sexe, Trancheage
     """
@@ -646,10 +650,10 @@ def dlplot_png():
 
         df = pd.read_sql(query, con=engine, params=(selected_code,))
         plt.figure(figsize=(20,20))
-        df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_population'].astype(str)
+        df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_Population'].astype(str)
         plt.pie(
 
-        df['total_population'],
+        df['total_Population'],
         labels=df['label'],
         autopct=lambda pct: autopct_format(pct,''),
         startangle=140
@@ -666,8 +670,8 @@ def dlplot_png():
             return "No Code_Gouvernorat provided", 400
 
         query = """
-        SELECT Sexe, ID_Sexe, SUM(Population) AS total_population
-        FROM population
+        SELECT Sexe, ID_Sexe, SUM(Population) AS total_Population
+        FROM Population
         WHERE Code_Delegation= %s AND ID_Sexe = %s
         GROUP BY Sexe, ID_Sexe, Trancheage
     """
@@ -678,10 +682,10 @@ def dlplot_png():
 
      
         plt.figure(figsize=(20,20))
-        df['label'] = df['Sexe'] +' ('+df['total_population'].astype(str)+')'
+        df['label'] = df['Sexe'] +' ('+df['total_Population'].astype(str)+')'
         plt.pie(
 
-        df['total_population'],
+        df['total_Population'],
         labels=df['label'],
         autopct=lambda pct: autopct_format(pct,''),
         startangle=140
@@ -698,8 +702,8 @@ def dlplot_png():
             return "No Code_Gouvernorat provided", 400
 
         query = """
-        SELECT Sexe, ID_Sexe,Classe_Age, Trancheage, SUM(Population) AS total_population
-        FROM population
+        SELECT Sexe, ID_Sexe,Classe_Age, Trancheage, SUM(Population) AS total_Population
+        FROM Population
         WHERE Code_Delegation =%s AND ID_Sexe = %s
         GROUP BY Sexe, ID_Sexe, Trancheage
     """
@@ -710,10 +714,10 @@ def dlplot_png():
 
      
         plt.figure(figsize=(20,20))
-        df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_population'].astype(str)
+        df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_Population'].astype(str)
         plt.pie(
 
-        df['total_population'],
+        df['total_Population'],
         labels=df['label'],
         autopct=lambda pct: autopct_format(pct,''),
         startangle=140
@@ -746,17 +750,17 @@ def gvplot_png():
 
        
         query = """
-        SELECT Sexe, SUM(Population) AS total_population
-        FROM population
+        SELECT Sexe, SUM(Population) AS total_Population
+        FROM Population
         WHERE Code_Gouvernorat= %s
         GROUP BY Sexe
         """
         df = pd.read_sql(query, con=engine, params=(selected_code,))
         plt.figure(figsize=(6,6))
         plt.pie(
-        df['total_population'],
+        df['total_Population'],
         labels=df['Sexe'],
-        autopct=lambda pct: autopct_format(pct, df['total_population']),
+        autopct=lambda pct: autopct_format(pct, df['total_Population']),
         startangle=140
         )
         plt.axis('equal')
@@ -771,8 +775,8 @@ def gvplot_png():
             return "No Code_Gouvernorat provided", 400
 
         query = """
-        SELECT Sexe, ID_Sexe, SUM(Population) AS total_population
-        FROM population
+        SELECT Sexe, ID_Sexe, SUM(Population) AS total_Population
+        FROM Population
         WHERE Code_Gouvernorat = %s AND ID_Sexe = %s
         GROUP BY Sexe, ID_Sexe
     """
@@ -782,10 +786,10 @@ def gvplot_png():
             return "No data found for the selected delegation and sex.", 404
 
         plt.figure(figsize=(6, 6))
-        plt.bar(df['Sexe'], df['total_population'], color='skyblue')
+        plt.bar(df['Sexe'], df['total_Population'], color='skyblue')
         plt.xlabel('Sexe')
         plt.ylabel('Population')
-        plt.title(f"Population for Sex: {df.iloc[0]['Sexe']} in Gouvernorat {df['total_population'][0]}")
+        plt.title(f"Population for Sex: {df.iloc[0]['Sexe']} in Gouvernorat {df['total_Population'][0]}")
     
         img = io.BytesIO()
         plt.savefig(img, format='png')
@@ -797,8 +801,8 @@ def gvplot_png():
             return "No Code_Gouvernorat provided", 400
 
         query = """
-        SELECT Sexe, ID_Sexe, Classe_Age, Trancheage, SUM(Population) AS total_population
-        FROM population
+        SELECT Sexe, ID_Sexe, Classe_Age, Trancheage, SUM(Population) AS total_Population
+        FROM Population
         WHERE Code_Gouvernorat= %s
         GROUP BY Sexe, ID_Sexe, Trancheage
     """
@@ -812,10 +816,10 @@ def gvplot_png():
 
         df = pd.read_sql(query, con=engine, params=(selected_code,))
         plt.figure(figsize=(20,20))
-        df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_population'].astype(str)
+        df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_Population'].astype(str)
         plt.pie(
 
-        df['total_population'],
+        df['total_Population'],
         labels=df['label'],
         autopct=lambda pct: autopct_format(pct,''),
         startangle=140
@@ -832,8 +836,8 @@ def gvplot_png():
             return "No Code_Gouvernorat provided", 400
 
         query = """
-        SELECT Sexe, ID_Sexe, SUM(Population) AS total_population
-        FROM population
+        SELECT Sexe, ID_Sexe, SUM(Population) AS total_Population
+        FROM Population
         WHERE Code_Gouvernorat= %s
         GROUP BY Sexe, ID_Sexe, Trancheage
     """
@@ -847,10 +851,10 @@ def gvplot_png():
 
         df = pd.read_sql(query, con=engine, params=(selected_code,))
         plt.figure(figsize=(20,20))
-        df['label'] = df['Sexe'] +' ('+df['total_population'].astype(str)+')'
+        df['label'] = df['Sexe'] +' ('+df['total_Population'].astype(str)+')'
         plt.pie(
 
-        df['total_population'],
+        df['total_Population'],
         labels=df['label'],
         autopct=lambda pct: autopct_format(pct,''),
         startangle=140
@@ -867,8 +871,8 @@ def gvplot_png():
             return "No Code_Gouvernorat provided", 400
 
         query = """
-        SELECT Sexe, ID_Sexe,Classe_Age, Trancheage, SUM(Population) AS total_population
-        FROM population
+        SELECT Sexe, ID_Sexe,Classe_Age, Trancheage, SUM(Population) AS total_Population
+        FROM Population
         WHERE Code_Gouvernorat= %s AND ID_Sexe = %s
         GROUP BY Sexe, ID_Sexe, Trancheage
     """
@@ -879,10 +883,10 @@ def gvplot_png():
 
      
         plt.figure(figsize=(20,20))
-        df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_population'].astype(str)
+        df['label'] = df['Sexe'] + " (" + df['Trancheage'] + ")\n" + df['total_Population'].astype(str)
         plt.pie(
 
-        df['total_population'],
+        df['total_Population'],
         labels=df['label'],
         autopct=lambda pct: autopct_format(pct,''),
         startangle=140
@@ -899,8 +903,8 @@ def gvplot_png():
             return "No Code_Gouvernorat provided", 400
 
         query = """
-        SELECT Sexe, ID_Sexe, SUM(Population) AS total_population
-        FROM population
+        SELECT Sexe, ID_Sexe, SUM(Population) AS total_Population
+        FROM Population
         WHERE Code_Gouvernorat= %s AND ID_Sexe = %s
         GROUP BY Sexe, ID_Sexe, Trancheage
     """
@@ -911,10 +915,10 @@ def gvplot_png():
 
      
         plt.figure(figsize=(20,20))
-        df['label'] = df['Sexe'] +' ('+df['total_population'].astype(str)+')'
+        df['label'] = df['Sexe'] +' ('+df['total_Population'].astype(str)+')'
         plt.pie(
 
-        df['total_population'],
+        df['total_Population'],
         labels=df['label'],
         autopct=lambda pct: autopct_format(pct,''),
         startangle=140
@@ -926,6 +930,8 @@ def gvplot_png():
         plt.close()
         img.seek(0)
         return Response(img.getvalue(), mimetype='image/png')
+
+
 
 
 
