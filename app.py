@@ -498,6 +498,7 @@
 
 
 
+
 # if __name__ == "__main__":
 #     app.run(debug=True)
 # if __name__ == "__main__":
@@ -638,7 +639,7 @@ def dlplot_png():
         SELECT Sexe, ID_Sexe, Classe_Age, Trancheage, SUM(Population) AS total_Population
         FROM Population
         WHERE Code_Delegation = %s
-        GROUP BY Sexe, ID_Sexe, Trancheage
+        GROUP BY Sexe, ID_Sexe, Trancheage, Classe_Age
     """
         df = pd.read_sql(query, con=engine, params=(selected_code,))
 
@@ -705,7 +706,7 @@ def dlplot_png():
         SELECT Sexe, ID_Sexe,Classe_Age, Trancheage, SUM(Population) AS total_Population
         FROM Population
         WHERE Code_Delegation =%s AND ID_Sexe = %s
-        GROUP BY Sexe, ID_Sexe, Trancheage
+        GROUP BY Sexe, ID_Sexe, Trancheage,Classe_Age
     """
         df = pd.read_sql(query, con=engine, params=(selected_code,sexe))
         if df.empty:
@@ -804,7 +805,7 @@ def gvplot_png():
         SELECT Sexe, ID_Sexe, Classe_Age, Trancheage, SUM(Population) AS total_Population
         FROM Population
         WHERE Code_Gouvernorat= %s
-        GROUP BY Sexe, ID_Sexe, Trancheage
+        GROUP BY Sexe, ID_Sexe, Trancheage,Classe_Age
     """
         df = pd.read_sql(query, con=engine, params=(selected_code,))
 
@@ -874,7 +875,7 @@ def gvplot_png():
         SELECT Sexe, ID_Sexe,Classe_Age, Trancheage, SUM(Population) AS total_Population
         FROM Population
         WHERE Code_Gouvernorat= %s AND ID_Sexe = %s
-        GROUP BY Sexe, ID_Sexe, Trancheage
+        GROUP BY Sexe, ID_Sexe, Trancheage,Classe_Age
     """
         df = pd.read_sql(query, con=engine, params=(selected_code,sexe))
         if df.empty:
