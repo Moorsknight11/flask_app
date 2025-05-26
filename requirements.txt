@@ -9,3 +9,4 @@ cloudscraper
 pymysql
 python-dotenv
 plotly
+kaleido
