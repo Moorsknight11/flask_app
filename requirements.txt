@@ -8,3 +8,4 @@ gunicorn     # for deploying to Render or similar platforms
 cloudscraper
 pymysql
 python-dotenv
+plotly
