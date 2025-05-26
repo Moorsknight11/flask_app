@@ -605,14 +605,18 @@ def dlpyramid_png():
     x=-male,
     name='Men',
     orientation='h',
-    marker_color='blue'
+    marker_color='blue',
+    text=male.apply(lambda v: f"{int(v):,}"),
+    textposition='outside'
 ))
     fig.add_trace(go.Bar(
     y=age_groups,
     x=female,
     name='Women',
     orientation='h',
-    marker_color='pink'
+    marker_color='pink',
+    text=female.apply(lambda v: f"{int(v):,}"),
+    textposition='outside'
 ))
 
     fig.update_layout(
