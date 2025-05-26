@@ -505,10 +505,11 @@
 # if __name__ == "__main__":
 # if __name__ == "__main__":
 # if __name__ == "__main__":
-from flask import Flask, render_template, request, redirect, url_for, Response
+from flask import Flask, render_template, request, redirect, url_for, Response,send_file
 from sqlalchemy import create_engine
 import pandas as pd
 import matplotlib.pyplot as plt
+import plotly.graph_objs as go
 import io
 
 from flask import jsonify
@@ -529,6 +530,7 @@ password = os.getenv('DB_PASSWORD')
 host = os.getenv('DB_HOST')
 database = os.getenv('DB_NAME')
 port = 17722
+
 engine = create_engine(f'mysql+pymysql://{username}:{password}@{host}:{port}/{database}')
 
 @app.route("/delegations")
@@ -563,6 +565,83 @@ def autopct_format(pct, allvals):
     absolute = int(round(pct / 100. * sum(allvals)))
     return f"{pct:.1f}%\n({absolute})"
 
+
+@app.route("/dlpyramid.png")
+def dlpyramid_png():
+    selected_code = request.args.get('code_delegation')
+    if not selected_code:
+        return "No code_delegation provided", 400
+
+    query = """
+        SELECT Classe_Age,Trancheage, Sexe, SUM(Population) AS total_Population
+        FROM Population
+        WHERE Code_Delegation = %s
+        GROUP BY Sexe,Classe_Age,Trancheage
+    """
+    df = pd.read_sql(query, con=engine, params=(selected_code,))
+    print(df['total_Population'].unique())
+    print("Sexe values:", df['Sexe'].unique())
+    print("Trancheage values:", df['Trancheage'].unique())
+    def age_key(age):
+        if '+' in age:
+            return int(age.replace('+', ''))  # e.g., '80+' → 80
+        elif '-' in age:
+            return int(age.split('-')[0])     # e.g., '5-9' → 5
+        else:
+            return 999  # fallback value for unexpected formats # sort by starting number
+
+    age_groups = sorted(df['Trancheage'].dropna().unique(), key=age_key)
+
+# Filter and align male and female populations using Trancheage
+    male = df[df['Sexe'] == ' Masculin'].set_index('Trancheage').reindex(age_groups)['total_Population'].fillna(0)
+    female = df[df['Sexe'] == 'Féminin'].set_index('Trancheage').reindex(age_groups)['total_Population'].fillna(0)
+    print("Age groups:", age_groups)
+    print("Male:", male.tolist())
+    print("Female:", female.tolist())
+# Create Plotly figure
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+    y=age_groups,
+    x=-male,
+    name='Men',
+    orientation='h',
+    marker_color='blue'
+))
+    fig.add_trace(go.Bar(
+    y=age_groups,
+    x=female,
+    name='Women',
+    orientation='h',
+    marker_color='pink'
+))
+
+    fig.update_layout(
+    title='Population Pyramid',
+    barmode='relative',
+    xaxis_title='Population',
+    yaxis_title='Age Group',
+    yaxis=dict(
+        categoryorder='array',
+        categoryarray=age_groups,
+        type='category'  # 🔧 Force categorical axis!
+    ),
+    xaxis=dict(
+        tickvals=[-10000, -5000, 0, 5000, 10000],
+        ticktext=['10k', '5k', '0', '5k', '10k']
+    )
+)
+
+    # Export the figure to a PNG image in memory
+    img_bytes = fig.to_image(format="png")
+
+    return send_file(
+        io.BytesIO(img_bytes),
+        mimetype='image/png',
+        as_attachment=False,
+        download_name='population_pyramid.png'
+    )
+
+
 @app.route("/dlplot.png")
 def dlplot_png():
 
@@ -585,9 +664,6 @@ def dlplot_png():
         WHERE Code_Delegation = %s
         GROUP BY Sexe
         """
-        df = pd.read_sql(query, con=engine, params=(selected_code,))
-        print(df.columns)
-
         df = pd.read_sql(query, con=engine, params=(selected_code,))
         plt.figure(figsize=(6,6))
         plt.pie(
