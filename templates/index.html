@@ -1,6 +1,6 @@
 <h1>Population Distribution by Sex</h1>
 <img id="chart" src="" alt="Pie Chart will appear here">
-
+<img id="pyramidImg" src="" alt="Population Pyramid">
 <h2>Select a Gouvernorat</h2>
 <form id="filter-form-gv" method="GET">
     <label for="code_gouvernorat">Gouvernorat:</label>
@@ -43,7 +43,7 @@
     </fieldset>
     <button type="submit">Get Graph</button>
 </form>
-<form id="showPyramidBtn"  method="GET" action="/dlpyramid" id="pyramid-form">
+<form id="showPyramidBtn" method="GET" action="/dlpyramid" id="pyramid-form">
 
     <button type="submit">Show Pyramid</button>
 </form>
@@ -88,17 +88,10 @@
         document.getElementById("chart").src = `/gvplot.png?code_gouvernorat=${gvCode}&age=${age}&sexe=${sexe}`;
     });
 
-document.getElementById("showPyramidBtn").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const delegationCode = document.getElementById("code_delegation").value;
-    if (!delegationCode) {
-        alert("Please select a delegation first.");
-        return;
-    }
-    fetch(`/dlpyramid?code_delegation=${delegationCode}`)
-        .then(response => response.text())
-        .then(graph => {
-            document.getElementById('graphContainer').innerHTML = graph;
-        });
-});
+    document.getElementById('showPyramidBtn').addEventListener('click', function (e) {
+        e.preventDefault();
+        const delegationCode = document.getElementById("code_delegation").value;
+        if (!delegationCode) return;
+        document.getElementById('pyramidImg').src = `/dlpyramid.png?code_delegation=${delegationCode}`;
+    });
 </script>
